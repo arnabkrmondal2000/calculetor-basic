@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './Calculetor.css';
+import calculetion from '../Calculetion/Calculetion';
 
 const Calculetor = () => {
     const [input,setInput] = useState<string>('');
@@ -12,8 +13,11 @@ const Calculetor = () => {
 
     const handleClick = (btn:string) => {
         if(btn === '=') {
+           
             try {
-                setResult(eval(input));
+                const calculetionResult = calculetion(input);
+                console.log(calculetionResult);
+                setResult(calculetionResult);
             } catch (error) {
                 setResult('error');
             }
