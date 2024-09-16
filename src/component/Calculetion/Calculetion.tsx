@@ -1,3 +1,4 @@
+//import { log } from "console";
 
 
 const calculetion = ( input : string ): number | string => {
@@ -24,7 +25,15 @@ const calculetion = ( input : string ): number | string => {
                     result *= nextNumber;
                     break;
                 case '/':
-                    result /= nextNumber;
+                    if(nextNumber === 0) {
+                        throw new Error ('Can not divide by zero');
+                        //return 'Can not divide by zero';
+                        // console.log('Can not divide by zero');
+                    }  else {
+                      result /= nextNumber;
+                    //   console.log(result);
+                    //   break;
+                    }
                     break;
                 default:
                     alert('invalid operator');

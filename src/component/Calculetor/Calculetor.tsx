@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, ChangeEvent} from 'react';
 import './Calculetor.css';
 import calculetion from '../Calculetion/Calculetion';
+import formatResult from '../Calculetion/FormatResult';
 
 const Calculetor = () => {
     const [input,setInput] = useState<string>('');
@@ -11,13 +12,22 @@ const Calculetor = () => {
     let btnSet3 = ['7','8','9','*'];
     let btnSet4 = ['0','.','/','='];
 
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
+    }
     const handleClick = (btn:string) => {
         if(btn === '=') {
-           
+            if(/[\+\-\*\/]$/.test(input)) {
+                alert("Invalid expression end!");
+                return; // prevent evaluation
+            }
             try {
-                const calculetionResult = calculetion(input);
+                const calculetionResult= calculetion(input);
                 console.log(calculetionResult);
-                setResult(calculetionResult);
+                const formatResultOutput = formatResult(calculetionResult);
+                console.log('formatResult ===> ', formatResultOutput); 
+                setResult(formatResultOutput);
             } catch (error) {
                 setResult('error');
             }
@@ -33,15 +43,25 @@ const Calculetor = () => {
             setResult(0);
         }
         else {
+            if (/[\+\-\*\/]$/.test(input) && /[\+\-\*\/]/.test(btn)) {
+                alert("Consecutive operators not allowed!");
+                return;
+            }
+            if (input.length === 0 && /[\*\/]/.test(btn)) {
+                alert("Cannot start with this operator!");
+                return;
+            }
             setInput(input + btn);
             console.log('input field ===>',input);       
         }
     }
+    
+
     return(
         <>
          <div className='calculetor'>
             <div className='displayField'>
-                <input type="text" value={input} />
+                <input type="text" value={input} onChange={handleChange}/>
                 <div className='result'>{result}</div>
             </div>
             <div className='buttonKey'>
