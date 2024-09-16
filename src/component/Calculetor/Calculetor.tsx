@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent} from 'react';
+import React, {useState,useEffect, useRef, ChangeEvent} from 'react';
 import './Calculetor.css';
 import calculetion from '../Calculetion/Calculetion';
 import formatResult from '../Calculetion/FormatResult';
@@ -6,11 +6,21 @@ import formatResult from '../Calculetion/FormatResult';
 const Calculetor = () => {
     const [input,setInput] = useState<string>('');
     const [result, setResult] = useState<string | number>(0);
-
+    const inputRef = useRef<HTMLInputElement>(null);
     let btnSet1 = ['1','2','3','+'];
     let btnSet2 = ['4','5','6','-'];
     let btnSet3 = ['7','8','9','*'];
     let btnSet4 = ['0','.','/','='];
+
+
+    //scroll the input field
+
+    useEffect(() => {
+        if(inputRef.current) {
+           console.log('ref is ===> ',inputRef.current)
+           inputRef.current.scrollLeft = inputRef.current.scrollWidth;
+        }
+    },[input]);
 
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +71,7 @@ const Calculetor = () => {
         <>
          <div className='calculetor'>
             <div className='displayField'>
-                <input type="text" value={input} onChange={handleChange}/>
+                <input type="text" value={input} onChange={handleChange} ref={inputRef}/>
                 <div className='result'>{result}</div>
             </div>
             <div className='buttonKey'>

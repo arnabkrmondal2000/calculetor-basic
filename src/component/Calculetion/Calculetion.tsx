@@ -41,7 +41,10 @@ const calculetion = ( input : string ): number | string => {
             }
         });
         return result;
-    } catch (error) {
+    } catch (error:any) {
+        if(error.message === 'Can not divide by zero') {
+            return 'Can not divide by zero';
+        }
         return 'Error';
     }
 }

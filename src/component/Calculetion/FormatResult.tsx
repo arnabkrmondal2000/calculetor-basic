@@ -2,7 +2,7 @@ const formatResult = (result : number | string): string => {
     //console.log('number 1 ===>', result);
     if (typeof result === 'number') {
         // Handle very large or small numbers by using scientific notation
-        if (result > 1e10 || result < -1e10) {
+        if (result > 1e8 || result < -1e10) {
             //console.log('result 3 ===>', result);
             return result.toExponential(5); // Converts to scientific notation with 5 decimal points
         }
